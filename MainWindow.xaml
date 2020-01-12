@@ -68,6 +68,7 @@
                 Height="30"
                 Margin="100,0,0,0"
                 Background="AliceBlue"
+                Command="{Binding GenerateData}"
                 Content="Generate" />
         </StackPanel>
         <TabControl Grid.Row="3">
@@ -84,7 +85,7 @@
                 <DataGrid Background="AliceBlue" />
             </TabItem>
             <TabItem Header="PC_Data">
-                <DataGrid Background="AliceBlue" />
+                <DataGrid Background="AliceBlue" ItemsSource="{Binding PcElements}" />
             </TabItem>
             <TabItem Header="DB_Data">
                 <DataGrid Background="AliceBlue" />
