@@ -28,14 +28,14 @@
                 Height="30"
                 Margin="100,0,0,0"
                 Background="AliceBlue"
-                Text="{Binding}" />
+                Text="{Binding PcPath}" />
             <Button
                 Name="btnBrowsePcPath"
                 Width="50"
                 Height="30"
                 Margin="10,0,0,0"
                 Background="AliceBlue"
-                Click="BtnBrowseNcPath_Click"
+                Command="{Binding BrowsePcPath}"
                 Content="..." />
         </StackPanel>
         <StackPanel
@@ -55,7 +55,7 @@
                 Height="30"
                 Margin="10,0,0,0"
                 Background="AliceBlue"
-                Click="BtnBrowseCsPath_Click"
+                Command="{Binding BrowseDbPath}"
                 Content="..." />
         </StackPanel>
         <StackPanel
@@ -63,13 +63,12 @@
             Grid.Column="0"
             Orientation="Horizontal">
             <Button
-                Name="btnGetList"
+                Name="btnGenerateData"
                 Width="50"
                 Height="30"
                 Margin="100,0,0,0"
                 Background="AliceBlue"
-                Click="BtnGetList_Click"
-                Content="Read files" />
+                Content="Generate" />
         </StackPanel>
         <TabControl Grid.Row="3">
             <TabItem Header="Dataset">
