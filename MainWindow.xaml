@@ -57,31 +57,71 @@
                 Background="AliceBlue"
                 Command="{Binding BrowseDbPath}"
                 Content="..." />
+            <Button
+                Name="btnGenerateData"
+                Width="50"
+                Height="30"
+                Margin="50,0,0,0"
+                Background="AliceBlue"
+                Command="{Binding GenerateData}"
+                Content="Collect" />
+            <Button
+                Name="bntClearList"
+                Width="50"
+                Height="30"
+                Margin="10,0,0,0"
+                Background="AliceBlue"
+                Command="{Binding ClearList}"
+                Content="Clear" />
         </StackPanel>
         <StackPanel
             Grid.Row="2"
             Grid.Column="0"
             Orientation="Horizontal">
             <Button
-                Name="btnGenerateData"
+                Name="bntFixDatabase"
                 Width="50"
                 Height="30"
                 Margin="100,0,0,0"
                 Background="AliceBlue"
-                Command="{Binding GenerateData}"
-                Content="Generate" />
+                Command="{Binding}"
+                Content="Fix Pc" />
             <Button
-                Name="bntClearList"
+                Name="bntFixPcElements"
                 Width="50"
                 Height="30"
-                Margin="50,0,0,0"
+                Margin="10,0,0,0"
                 Background="AliceBlue"
-                Command="{Binding ClearList}"
-                Content="Clear" />
+                Command="{Binding}"
+                Content="Fix Db" />
         </StackPanel>
+
         <TabControl Grid.Row="3">
             <TabItem Header="Dataset">
-                <DataGrid Background="AliceBlue" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid
+                        x:Name="dgDataSetSend"
+                        Grid.Column="0"
+                        Margin="0,0,0,0"
+                        AutoGenerateColumns="False"
+                        Background="AliceBlue"
+                        ItemsSource="{Binding}"
+                        SelectionMode="Single"
+                        SelectionUnit="FullRow" />
+                    <DataGrid
+                        x:Name="dgDataSetRec"
+                        Grid.Column="1"
+                        Margin="0,0,0,0"
+                        AutoGenerateColumns="False"
+                        Background="AliceBlue"
+                        ItemsSource="{Binding}"
+                        SelectionMode="Single"
+                        SelectionUnit="FullRow" />
+                </Grid>
             </TabItem>
             <TabItem Header="ExCom">
                 <DataGrid Background="AliceBlue" />
