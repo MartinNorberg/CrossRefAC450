@@ -16,12 +16,15 @@
     public class ViewModel : INotifyPropertyChanged
     {
         private readonly ObservableCollection<PcData> pcElemets = new ObservableCollection<PcData>();
+        private readonly ObservableCollection<DbData> dbElemets = new ObservableCollection<DbData>();
         private string pcPath = "Path to PCDATA folder";
         private string dbPath = "Path to DBDATA folder";
 
         public ViewModel()
         {
             this.PcElements = new ReadOnlyObservableCollection<PcData>(this.pcElemets);
+
+            this.DbElements = new ReadOnlyObservableCollection<DbData>(this.dbElemets);
 
             this.BrowsePcPath = new RelayCommand(_ =>
             {
@@ -47,11 +50,14 @@
             this.ClearList = new RelayCommand(_ =>
             {
                 this.pcElemets.Clear();
+                this.dbElemets.Clear();
 
             });
         }
 
         public ReadOnlyObservableCollection<PcData> PcElements { get; }
+
+        public ReadOnlyObservableCollection<DbData> DbElements { get; }
 
         public ICommand BrowsePcPath { get; }
 
@@ -112,11 +118,15 @@
 
         private bool TryGenerateData()
         {
-            if (!Directory.Exists(this.PcPath))
+            if (Directory.Exists(this.PcPath))
             {
-                return false;
+               this.TrySearchPcPrograms();
             }
-            this.TrySearchPcPrograms();
+            if (Directory.Exists(this.DbPath))
+            {
+                this.TrySearchDbFiles();
+            }
+
             return true;
         }
 
@@ -129,6 +139,22 @@
                     foreach (var item in results)
                     {
                         this.pcElemets.Add(item);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool TrySearchDbFiles()
+        {
+            foreach (var file in Directory.GetFiles(this.DbPath))
+            {
+                if (DbData.TryParse(file, out var results))
+                {
+                    foreach (var item in results)
+                    {
+                        this.dbElemets.Add(item);
                     }
                 }
             }

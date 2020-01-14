@@ -96,7 +96,7 @@
                 <DataGrid Background="AliceBlue" ItemsSource="{Binding PcElements}" />
             </TabItem>
             <TabItem Header="DB_Data">
-                <DataGrid Background="AliceBlue" />
+                <DataGrid Background="AliceBlue" ItemsSource="{Binding DbElements}" />
             </TabItem>
         </TabControl>
     </Grid>

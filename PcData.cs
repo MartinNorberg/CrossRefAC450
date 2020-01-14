@@ -30,8 +30,6 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-       
-
         public string ItemDesignation { get; }
 
         public string CallName { get; }

@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DbData.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="PcData.cs" />
     <Compile Include="Protocol.cs" />
