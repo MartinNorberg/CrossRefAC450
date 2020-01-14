@@ -11,6 +11,6 @@ namespace AC450Communication
         Receive,
         Send,
         Bidirectional,
-        None,
+        ___,
     }
 }

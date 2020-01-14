@@ -10,7 +10,7 @@ namespace AC450Communication
     {
         TCP,
         UDP,
-        None,
+        ___,
     }
 
     //public static bool TryParseInt(int protocol, out Protocol value)

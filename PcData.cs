@@ -25,6 +25,7 @@
             this.MsgId = msgID;
             this.RemoteIpAddress = remoteIpAddress;
             this.Dir = direction;
+            this.Protocol = protocol;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,8 +100,8 @@
             var port = string.Empty;
             var page = string.Empty;
             var mode = Mode.None;
-            var protocol = Protocol.None;
-            var direction = Direction.None;
+            var protocol = Protocol.___;
+            var direction = Direction.___;
 
             var results = new List<PcData>();
 
@@ -186,7 +187,7 @@
                 }
                 if (line.ToUpper().Contains("VIP-LINK ("))
                 {
-                    foundVipChan = true;
+                    foundVipLink = true;
                     var array = tmpLine.Split(' ');
                     itemdesignation = array[0];
                     if (array.Length > 4)
@@ -275,7 +276,7 @@
                     if (tmpLine.ToUpper().Contains("CH-IDENT"))
                     {
                         channelIdentity = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.None, Mode.None, page, string.Empty, string.Empty, Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.___, Mode.None, page, string.Empty, string.Empty, Direction.___));
                         foundPCCRD = false;
                     }
                 }
@@ -284,7 +285,7 @@
                     if (tmpLine.ToUpper().Contains("CH-IDENT"))
                     {
                         channelIdentity = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.None, Mode.None, page, string.Empty, string.Empty, Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.___, Mode.None, page, string.Empty, string.Empty, Direction.___));
                         foundPCCRD = false;
                     }
                 }
@@ -294,7 +295,7 @@
                     {
                         var array = tmpLine.Split(' ');
                         channelIdentity = array[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.None, Mode.None, page, string.Empty, string.Empty, Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, channelIdentity, port, Protocol.___, Mode.None, page, string.Empty, string.Empty, Direction.___));
                         foundPCCWR = false;
                     }
                 }
@@ -310,7 +311,7 @@
                     if (line.ToUpper().Contains(":CHAN1")) chan1 = tmpLine.Split(' ')[1];
                     if (line.ToUpper().Contains(":MSGID1"))
                     {
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.TCP, Mode.None, page, tmpLine.Split(' ')[1], string.Empty, Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.TCP, Mode.None, page, tmpLine.Split(' ')[1], string.Empty, Direction.___));
                         foundVipChan = false;
                     }
                 }
@@ -322,7 +323,7 @@
                     if (line.ToUpper().Contains(":INET1"))
                     {
                         msgID = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.None, Mode.None, page, string.Empty, tmpLine.Split(' ')[1], Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.___, Mode.None, page, string.Empty, tmpLine.Split(' ')[1], Direction.___));
                         foundvipNode = false;
                     }
                 }
@@ -334,28 +335,29 @@
                     if (line.ToUpper().Contains(":PROT1")) prot1 = tmpLine.Split(' ')[1];
                     if (line.ToUpper().Contains(":DIR1"))
                     {
-                        if (int.Parse(tmpLine.Split(' ')[1]) == 1)
+                        var array = tmpLine.Split(' ');
+
+                        if (array[1].Contains("1"))
                         {
                             direction = Direction.Send;
                         }
-                        else if (int.Parse(tmpLine.Split(' ')[1]) == 2)
+                        else if (array[1].Contains("2"))
                         {
                             direction = Direction.Bidirectional;
                         }
-                        else if (int.Parse(tmpLine.Split(' ')[1]) == 0)
+                        else if (array[1].Contains("0"))
                         {
                             direction = Direction.Receive;
                         }
                         else
                         {
-                            direction = Direction.None;
+                            direction = Direction.___;
                         }
-
                     }
                     if (line.ToUpper().Contains(":PORT1")) port = tmpLine.Split(' ')[1];
                     if (line.ToUpper().Contains(":TCP/UDP1"))
                     {
-                        if (int.Parse(tmpLine.Split(' ')[1]) ==1)
+                        if (tmpLine.Split(' ')[1].Contains("1"))
                         {
                             protocol = Protocol.UDP;
                         }
@@ -363,14 +365,12 @@
                         {
                             protocol = Protocol.TCP;
                         }
-                        
-
                     }
                     if (line.ToUpper().Contains(":CLN/SRV1"))
                     {
 
                         mode = Mode.None;
-                        if (int.Parse(tmpLine.Split(' ')[1])==1)
+                        if (tmpLine.Split(' ')[1].Contains("1"))
                         {
                             mode = Mode.Server;
                         }
@@ -392,7 +392,7 @@
                     if (line.ToUpper().Contains(":REMINET"))
                     {
                         remoteIp = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.None, Mode.None, page, string.Empty, remoteIp, Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, port, "", port, Protocol.___, Mode.None, page, string.Empty, remoteIp, Direction.___));
                         founVipNetw = false;
                     }
                 }
@@ -403,7 +403,7 @@
                     if (line.ToUpper().Contains(":LAST"))
                     {
                         last = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, "", chan1, "", Protocol.None, Mode.None, page, string.Empty, "", Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, "", chan1, "", Protocol.___, Mode.None, page, string.Empty, "", Direction.___));
                         foundvipW = false;
                     }
                 }
@@ -414,7 +414,7 @@
                     if (line.ToUpper().Contains(":LAST"))
                     {
                         last = tmpLine.Split(' ')[1];
-                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, link, chan1, port, Protocol.None, Mode.None, page, string.Empty, "", Direction.None));
+                        results.Add(new PcData(fileName, itemdesignation, callName, net, node, link, chan1, port, Protocol.___, Mode.None, page, string.Empty, "", Direction.___));
                         foundVipR = false;
                     }
                 }

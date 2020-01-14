@@ -70,6 +70,14 @@
                 Background="AliceBlue"
                 Command="{Binding GenerateData}"
                 Content="Generate" />
+            <Button
+                Name="bntClearList"
+                Width="50"
+                Height="30"
+                Margin="50,0,0,0"
+                Background="AliceBlue"
+                Command="{Binding ClearList}"
+                Content="Clear" />
         </StackPanel>
         <TabControl Grid.Row="3">
             <TabItem Header="Dataset">

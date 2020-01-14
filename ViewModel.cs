@@ -34,10 +34,20 @@
             });
 
             this.GenerateData = new RelayCommand(_ => {
+
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+
                 if (!this.TryGenerateData())
                 {
                     MessageBox.Show("Failed to generate data", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                Mouse.OverrideCursor = null;
+            });
+
+            this.ClearList = new RelayCommand(_ =>
+            {
+                this.pcElemets.Clear();
+
             });
         }
 
@@ -48,6 +58,8 @@
         public ICommand BrowseDbPath { get; }
 
         public ICommand GenerateData { get; }
+
+        public ICommand ClearList { get; }
 
         public string PcPath
         {
@@ -100,7 +112,11 @@
 
         private bool TryGenerateData()
         {
-            TrySearchPcPrograms();
+            if (!Directory.Exists(this.PcPath))
+            {
+                return false;
+            }
+            this.TrySearchPcPrograms();
             return true;
         }
 
